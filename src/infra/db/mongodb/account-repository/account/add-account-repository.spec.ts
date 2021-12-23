@@ -10,10 +10,10 @@ describe('Account Mongo Repository', () => {
         await MongoHelper.connect(process.env.MONGO_URL as string)
       })
 
-     /* beforeEach(async()=>{
+      beforeEach(async()=>{
           const accountCollection = MongoHelper.getCollection('accounts')
-          await accountCollection.deleteMany({})
-      })*/
+          await (await accountCollection).deleteMany({})
+      })
     
       afterAll(async () => {
         await MongoHelper.disconnect()
@@ -26,11 +26,6 @@ describe('Account Mongo Repository', () => {
       email: 'any_email@mail.com',
       senha: 'any_password'
     })
-    const account1 = await sut.add({
-        nome: 'any_name',
-        email: 'any_emabil@mail.com',
-        senha: 'any_password'
-      })
     expect(account).toBeTruthy()
     expect(account?.id).toBeTruthy()
     expect(account?.nome).toBe('any_name')

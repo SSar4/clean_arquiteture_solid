@@ -4,13 +4,14 @@ import { EmailValidatorAdapter } from '../../utils/email-validator-adapter/email
 import { SenhaValidatorAdapter } from '../../utils/senha-validator-adapter/senha-validator-adapter'
 import { BcrypterAdapter } from '../../infra/cryptography/bcrypt-adapter'
 import { AccountMongoRepository } from '../../infra/db/mongodb/account-repository/account/add-account-repository'
-
-export const makeSignuoController = (): SignUpController =>{
+import { Controller } from '../../presentation/controller/protocols/controller'
+import { LogControllerDecorration } from '../decorations/log'
+export const makeSignuoController = (): Controller =>{
     const emailValidatorAdapter = new EmailValidatorAdapter()
     const senhaValidatorAdapter = new SenhaValidatorAdapter()
     const bcrypterAdapter = new BcrypterAdapter(12)
     const accountMongoRepository = new AccountMongoRepository()
     const dbAddAccount = new DbAddAccount(bcrypterAdapter, accountMongoRepository)
     const signUpController = new SignUpController(emailValidatorAdapter, senhaValidatorAdapter, dbAddAccount)
-    return signUpController
+    return new LogControllerDecorration(signUpController)
 }
