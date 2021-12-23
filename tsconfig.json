@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    //onde e gerado o codigo js
+    "outDir": "./dist",
+    //inclui arquivos js
+    "allowJs": true,
+    //gera a versão do js
+    "target": "es2019",
+    //para importar os modulos com import/export e gerar na versão que os browser intende
+    "module": "commonjs",
+    //converte os modulos
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
