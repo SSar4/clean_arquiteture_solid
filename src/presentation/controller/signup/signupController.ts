@@ -3,7 +3,7 @@ import { badRequest, serverError, success } from "../../helprs/http-helps";
 import { HttpRequest, HttpResponse } from "../../protocols";
 import { Controller } from "../protocols/controller";
 import { EmailValidator, SenhaValidator, AddAccount } from "./signup-protocols";
-
+import KafkaProducer from "../../../main/kafka/kafka";
 export class SignUpController implements Controller{
   private readonly emailValidator: EmailValidator
   private readonly senhaValidator: SenhaValidator
@@ -12,6 +12,7 @@ export class SignUpController implements Controller{
     this.emailValidator = emailValidator
     this.senhaValidator = senhaValidator
     this.addAccount = addAccount
+
   }
     async handle (httpRequest: HttpRequest): Promise<HttpResponse>{
  try{
@@ -34,9 +35,13 @@ export class SignUpController implements Controller{
         return badRequest(new InvalidParamError('senha'))
       }
       const account = await this.addAccount.add({ nome, email, senha })
+      if(account){
+        const kafkaProducer = new KafkaProducer('ms_create_account')
+        await kafkaProducer.send('client_approved',JSON.stringify({id: account?.id, nome: account?.nome, email: account?.email}))
+      }
       return await new Promise((resolve, reject) => resolve(success(account)))
-    }  catch (error) {
-      return serverError()
+    }  catch (error: any) {
+      return serverError(error.stack)
     }
     }
 }
