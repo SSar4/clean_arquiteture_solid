@@ -1,10 +1,10 @@
 import { EmailValidatorAdapter } from "../../../utils/email-validator-adapter/email-validator-adapter"
 import { SenhaValidatorAdapter } from "../../../utils/senha-validator-adapter/senha-validator-adapter"
 import { InvalidParamError, MissinParamError, ServerError } from "../../errors"
-import { badRequest, serverError, success } from "../../helprs/http-helps"
+import { badRequest, serverError, success } from "../../helprs/http/http-helps"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { LoginController } from "./login"
-import { Authentication, EmailValidator, SenhaValidator } from "./login-protocols";
+import { Authentication, AuthenticationModel, EmailValidator, SenhaValidator } from "./login-protocols";
 
 const makeEmailValidator = (): EmailValidator =>{
     class EmailValidateStub implements EmailValidatorAdapter {
@@ -17,7 +17,7 @@ const makeEmailValidator = (): EmailValidator =>{
 
 const makeAuthentication = (): Authentication =>{
     class AuthStub{
-        async auth(email: string, senha: string): Promise<string> {
+        async auth(login: AuthenticationModel): Promise<string> {
             return new Promise(resolve=>resolve('access_token'))
         }
     }
@@ -168,7 +168,7 @@ describe('Login controller', ()=>{
             }
         }
         await sut.handle(httpRequest)
-        expect(authSpy).toHaveBeenCalledWith('any@email.com','any_senha')
+        expect(authSpy).toHaveBeenCalledWith({email:'any@email.com',senha:'any_senha'})
       })
 
       test('devera retornar 401 ao usuario desconhecido', async()=>{

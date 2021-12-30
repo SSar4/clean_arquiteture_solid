@@ -1,9 +1,10 @@
-import { InvalidParamError, ServerError } from "../../errors"
+import {  ServerError } from "../../errors"
 import { MissinParamError } from "../../errors/missing-param-error"
-import { AccountModel, AddAccount, AddAccountModel, HttpRequest, HttpResponse, SenhaValidator } from "./signup-protocols"
+import { AccountModel, AddAccount, AddAccountModel, HttpRequest, HttpResponse } from "./signup-protocols"
 import { SignUpController } from "./signupController"
-import { badRequest, serverError, success } from '../../helprs/http-helps'
+import { badRequest, serverError, success } from '../../helprs/http/http-helps'
 import { Validation } from "../../helprs/validators/validation"
+import { KafkaProducerModel } from "../../../main/kafka/kafkaModel"
 
 
 const makeFakeAccount = (): AccountModel => ({
@@ -46,22 +47,35 @@ const makeValidation = (): Validation => {
   }
   return new ValidationStub()
 }
+
+const makeKafka = (): KafkaProducerModel => {
+  class KafkaStub implements KafkaProducerModel{
+    async public(account: AccountModel): Promise<void> {
+        
+    }
+  }
+  return new KafkaStub()
+}
 interface SutTypes {
     sut: SignUpController
     addAccountStub: AddAccount
     validationStub: Validation
+    kafkaStub: KafkaProducerModel
   }
   const makeSut = (): SutTypes => {
     const addAccountStub = makeAddAccount()
     const validationStub = makeValidation()
+    const kafkaStub = makeKafka()
     const sut = new SignUpController(
+      kafkaStub,
       addAccountStub, 
       validationStub
       )
     return {  
       sut,
        addAccountStub,
-       validationStub 
+       validationStub,
+       kafkaStub
       }
   }
 describe('test SignUpController',()=>{

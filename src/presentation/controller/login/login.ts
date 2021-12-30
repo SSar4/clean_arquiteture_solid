@@ -1,6 +1,6 @@
-import { Authentication, EmailValidator, SenhaValidator } from "./login-protocols";
+import { Authentication, AuthenticationModel, EmailValidator, SenhaValidator } from "./login-protocols";
 import { InvalidParamError, MissinParamError } from "../../errors";
-import { badRequest, serverError, success, unauthorized } from "../../helprs/http-helps";
+import { badRequest, serverError, success, unauthorized } from "../../helprs/http/http-helps";
 import { HttpRequest, HttpResponse } from "../../protocols";
 import { Controller } from "../protocols/controller";
 
@@ -29,7 +29,8 @@ export class LoginController implements Controller {
         if(!this.senhaValidator.isValid(senha)){
             return badRequest(new InvalidParamError('senha'))
         }
-        const access_token = await this.authentication.auth(email,senha)
+        const login: AuthenticationModel = {email, senha}
+        const access_token = await this.authentication.auth(login)
         if(!access_token){
             return unauthorized()
         }
