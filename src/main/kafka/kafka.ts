@@ -1,4 +1,4 @@
-import { Kafka, Producer } from "kafkajs";
+import { Kafka, Producer, logLevel } from "kafkajs";
 import { KafkaP } from '../../producer/producer'
 export default class KafkaProducer implements KafkaP {
   public producer: Producer;
