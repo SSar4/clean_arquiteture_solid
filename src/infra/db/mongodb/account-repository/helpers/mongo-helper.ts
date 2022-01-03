@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { Collection, MongoClient } from 'mongodb'
 
 export const MongoHelper = {
@@ -14,17 +15,16 @@ export const MongoHelper = {
   },
 
   emailUnique (name: string): void {
-    this.client.db().collection(name).createIndex( { "email": 1 }, { unique: true } )
+    this.client.db().collection(name).createIndex({ email: 1 }, { unique: true })
   },
   async getCollection (name: string): Promise<Collection> {
-    if (!this.url) throw new Error('Mongo não esta conectado')
+    if (this.url === null) throw new Error('Mongo não esta conectado')
 
-    if (!this.client) {
+    if (this.client === null) {
       await this.connect(this.url)
     }
-   // this.client.db().collection(name).createIndex( { "email": 1 }, { unique: true } )
+    // this.client.db().collection(name).createIndex( { "email": 1 }, { unique: true } )
     return this.client.db().collection(name)
-
   },
 
   map: (data: any): any => {

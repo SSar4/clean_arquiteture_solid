@@ -1,4 +1,4 @@
 
 export interface KafkaP {
-    send(topic: string, value: string): Promise<void>
+  send: (topic: string, value: string) => Promise<void>
 }

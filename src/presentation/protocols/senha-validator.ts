@@ -1,3 +1,3 @@
 export interface SenhaValidator {
-    isValid: (senha: string) => boolean
-  }
+  isValid: (senha: string) => boolean
+}

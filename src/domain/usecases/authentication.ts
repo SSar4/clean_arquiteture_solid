@@ -1,7 +1,7 @@
 export interface AuthenticationModel {
-    email: string
-    senha: string
+  email: string
+  senha: string
 }
 export interface Authentication {
-    auth (login: AuthenticationModel): Promise<string |null>
+  auth: (login: AuthenticationModel) => Promise<string |null>
 }

@@ -4,4 +4,4 @@ import setupRoots from '../config/routes'
 const app = express()
 setupMiddlewares(app)
 setupRoots(app)
-export default  app
+export default app

@@ -1,3 +1,3 @@
 export interface TokenGeneration{
-    generate(id: string): Promise<string>
+  generate: (id: string) => Promise<string>
 }

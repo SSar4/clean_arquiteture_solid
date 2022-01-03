@@ -1,6 +1,5 @@
-import { AccountModel } from "../../domain/models/account";
-import KafkaProducer from "./kafka";
+import { AccountModel } from '../../domain/models/account'
 
 export interface KafkaProducerModel {
-     public(account: AccountModel): Promise<void>
+  public: (account: AccountModel) => Promise<void>
 }
