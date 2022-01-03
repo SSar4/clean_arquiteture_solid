@@ -1,5 +1,5 @@
-import { HashCompare } from "../../../data/protocols/cryptography/hash-compare";
-import { TokenGeneration } from "../../../data/protocols/cryptography/token";
+import { HashCompare } from "../../../data/protocols/cryptography/bcrypt-adapter/hash-compare";
+import { TokenGeneration } from "../../../data/protocols/cryptography/jwt-adpter/token";
 import { LoadAccountByEmailRepository } from "../../../data/protocols/db/load-account-email-repository";
 import { UpdateAcessToken } from "../../../data/protocols/db/update-acess-token-repository";
 import { AuthenticationModel } from "../authentication";
