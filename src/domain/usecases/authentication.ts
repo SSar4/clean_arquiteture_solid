@@ -3,5 +3,5 @@ export interface AuthenticationModel {
     senha: string
 }
 export interface Authentication {
-    auth (login: AuthenticationModel): Promise<string>
+    auth (login: AuthenticationModel): Promise<string |null>
 }

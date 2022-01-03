@@ -1,4 +1,4 @@
-import { LogErrorRepository } from "../../data/protocols/log-respository"
+import { LogErrorRepository } from "../../data/protocols/db/log-respository"
 import { Controller } from "../../presentation/controller/protocols/controller"
 import { HttpRequest, HttpResponse } from "../../presentation/protocols"
 
