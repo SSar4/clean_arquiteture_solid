@@ -56,7 +56,7 @@ describe('Account Mongo Repository', () => {
     expect(account).toBeFalsy()
   })
 
-  test('updateAcessToken on  success', async () => {
+  test('procurar pelo email on  success', async () => {
     const sut = makeSut()
     await accountCollection.insertOne({
       nome: 'any_name',
@@ -69,5 +69,18 @@ describe('Account Mongo Repository', () => {
     expect(account?.nome).toBe('any_name')
     expect(account?.email).toBe('any_email@mail.com')
     expect(account?.senha).toBe('any_password')
+  })
+
+  test('updateAcessToken on  success', async () => {
+    const sut = makeSut()
+    const result = await accountCollection.insertOne({
+      nome: 'any_name',
+      email: 'any_email@mail.com',
+      senha: 'any_password'
+    })
+    await sut.updateAcessToken(result.insertedId.toString(), 'any_token')
+    const account = await accountCollection.findOne({ _id: result.insertedId })
+    expect(account).toBeTruthy()
+    expect(account?.accessToken).toBe('any_token')
   })
 })

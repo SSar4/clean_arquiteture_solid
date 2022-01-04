@@ -1,15 +1,15 @@
-import { Validation } from '../../presentation/helprs/validators/validation'
+import { Validation } from '../../../presentation/helprs/validators/validation'
 
-import { ValidatorComposite } from '../../utils/validator/validator'
+import { ValidatorComposite } from '../../../utils/validator/validator'
 import { makeSignupValidation } from './signup-validation'
-import { RequiredFieldValidation } from '../../presentation/helprs/validators/required-fiel-validations'
-import { CompareFieldsValidation } from '../../presentation/helprs/validators/compare-fields-validation'
-import { EmailValidation } from '../../presentation/helprs/validators/require-email-validation'
-import { SenhaValidation } from '../../presentation/helprs/validators/required-senha-validator'
-import { EmailValidator } from '../../presentation/protocols/email-validator'
-import { SenhaValidator } from '../../presentation/protocols/senha-validator'
+import { RequiredFieldValidation } from '../../../presentation/helprs/validators/required-fiel-validations'
+import { CompareFieldsValidation } from '../../../presentation/helprs/validators/compare-fields-validation'
+import { EmailValidation } from '../../../presentation/helprs/validators/require-email-validation'
+import { SenhaValidation } from '../../../presentation/helprs/validators/required-senha-validator'
+import { EmailValidator } from '../../../presentation/protocols/email-validator'
+import { SenhaValidator } from '../../../presentation/protocols/senha-validator'
 
-jest.mock('../../utils/validator/validator')
+jest.mock('../../../utils/validator/validator')
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {

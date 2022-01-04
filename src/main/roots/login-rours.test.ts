@@ -4,7 +4,7 @@ import { MongoHelper } from '../../infra/db/mongodb/account-repository/helpers/m
 import app from '../config/app'
 
 let accountCollection: Collection
-describe('signup route', () => {
+describe('login route', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL as string)
   })
@@ -17,13 +17,17 @@ describe('signup route', () => {
     accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
-  test('devera retornar 200 uma conta sucesso', async () => {
-    await request(app).post('/api/signup')
+
+  test('devera retornar 200 com login bem sucedido', async () => {
+    await accountCollection.insertOne({
+      nome: 'nome_valido',
+      email: 'email2_@email.com',
+      senha: '1234SaraS'
+    })
+    await request(app).post('/api/login')
       .send({
-        nome: 'nome_valido',
-        email: 'email_@email.com',
-        senha: '1234SaraS',
-        senhaConfirme: '1234SaraS'
+        email: 'email2_@email.com',
+        senha: '1234SaraS'
       })
     expect(200)
   })
