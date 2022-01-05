@@ -123,6 +123,19 @@ describe('test SignUpController', () => {
     expect(validatorSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 
+  test('devera chamar o kafka', async () => {
+    const { sut, kafkaStub } = makeSut()
+    const validatorSpy = jest.spyOn(kafkaStub, 'public')
+    const httpRequest: HttpRequest = makeRequest()
+    await sut.handle(httpRequest)
+    expect(validatorSpy).toHaveBeenCalledWith({
+      email: 'valid_email@email.com',
+      id: 'valid_id',
+      nome: 'valid_nome',
+      senha: 'valid_senha'
+    })
+  })
+
   test('devera retornar 400 se o validador falhar', async () => {
     const { sut, validationStub } = makeSut()
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissinParamError('any_error'))

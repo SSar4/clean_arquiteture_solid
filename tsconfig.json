@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     //onde e gerado o codigo js
-    "outDir": "./dist",
+    "outDir": "dist",
     //inclui arquivos js
-    "allowJs": true,
+    // "allowJs": true,
     //gera a versão do js
     "target": "es2019",
     //para importar os modulos com import/export e gerar na versão que os browser intende
@@ -14,4 +14,6 @@
     "strict": true,
     "skipLibCheck": true
   }
+  //"include": ["src"],
+  // "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
