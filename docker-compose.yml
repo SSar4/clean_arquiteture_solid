@@ -43,3 +43,5 @@ services:
       - "host.docker.internal:172.17.0.1"
     environment:
       KAFKA_BROKERCONNECT: kafka:9092
+
+      # --clearCache para limpar o cash do jest

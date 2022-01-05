@@ -1,3 +1,4 @@
+import { hash } from 'bcrypt'
 import { Collection } from 'mongodb'
 import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/account-repository/helpers/mongo-helper'
@@ -19,16 +20,28 @@ describe('login route', () => {
   })
 
   test('devera retornar 200 com login bem sucedido', async () => {
+    const hashedPassword = await hash('1234SaraS/', 12)
     await accountCollection.insertOne({
-      nome: 'nome_valido',
-      email: 'email2_@email.com',
-      senha: '1234SaraS'
+      nome: 'any_name',
+      email: 'any_email@mail.com',
+      senha: hashedPassword
     })
-    await request(app).post('/api/login')
+    await request(app)
+      .post('/api/login')
       .send({
-        email: 'email2_@email.com',
-        senha: '1234SaraS'
+        email: 'any_email@mail.com',
+        senha: '1234SaraS/'
       })
-    expect(200)
+      .expect(200)
+  })
+
+  test('devera retornar 401 ao usuario não encontrado', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'any_email@mail.com',
+        senha: '1234SaraS/'
+      })
+      .expect(401)
   })
 })

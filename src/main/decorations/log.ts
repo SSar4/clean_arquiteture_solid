@@ -12,7 +12,6 @@ export class LogControllerDecorration implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse > {
     const httResponse: HttpResponse = await this.controller.handle(httpRequest)
-    //  console.log(httResponse,'---------------------------------')
     if (httResponse.statusCode === 500) {
       await this.logError.log(httResponse.body.stack)
     }

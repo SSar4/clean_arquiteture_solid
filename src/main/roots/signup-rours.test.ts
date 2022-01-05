@@ -22,9 +22,8 @@ describe('signup route', () => {
       .send({
         nome: 'nome_valido',
         email: 'email_@email.com',
-        senha: '1234SaraS',
-        senhaConfirme: '1234SaraS'
-      })
-    expect(200)
+        senha: '1234SaraS/',
+        senhaConfirme: '1234SaraS/'
+      }).expect(200)
   })
 })

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { badRequest, serverError, success } from '../../helprs/http/http-helps'
 import { HttpRequest, HttpResponse } from '../../protocols'
 import { Controller } from '../protocols/controller'
