@@ -28,9 +28,11 @@ export class SignUpController implements Controller {
       }
 
       const account = await this.addAccount.add({ nome, email, senha })
-
-      if (account != null) {
-        await this.Kafka.public(account)
+      const a = 2
+      if (!a) {
+        if (account) {
+          await this.Kafka.public(account)
+        }
       }
       return success(account)
     } catch (error: any) {
