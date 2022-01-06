@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { Collection, MongoClient } from 'mongodb'
-
+import env from '../../../../../main/config/env'
 export const MongoHelper = {
   client: null as unknown as MongoClient,
   url: null as unknown as string,
 
   async connect (uri: string): Promise<void> {
-    this.url = uri
+    this.url = env.mongoUrl
     this.client = await MongoClient.connect(this.url)
   },
 
